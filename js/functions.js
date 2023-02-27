@@ -14,9 +14,7 @@ const getPalindromString = (someString) => {
   const reversedSomeString = formatedSomeString.split('').reverse().join('');
   // console.log(formatedSomeString);
   // console.log(reversedSomeString);
-  if (formatedSomeString === reversedSomeString) {
-    return true;
-  } return false;
+  return formatedSomeString === reversedSomeString;
 };
 
 getPalindromString('Лёша на полке клопа нашёл');
@@ -34,7 +32,8 @@ const returnOriginalString = (someString, minLength, additionalString) => {
   const actualAdditionalString = minLength - someString.length;
   if (actualAdditionalString <= 0) {
     return someString;
-  } return additionalString.slice(0, actualAdditionalString % additionalString.length) + additionalString.repeat(actualAdditionalString / additionalString.length) + someString;
+  }
+  return additionalString.slice(0, actualAdditionalString % additionalString.length) + additionalString.repeat(actualAdditionalString / additionalString.length) + someString;
 };
 
 returnOriginalString('qwerty', 4, '0');
