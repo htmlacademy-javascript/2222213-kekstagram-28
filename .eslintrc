@@ -14,3 +14,6 @@ globals:
 
 extends:
   "htmlacademy/vanilla"
+
+// rules:
+//   no-console: 0;
