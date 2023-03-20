@@ -84,4 +84,3 @@ const getObjects = () => {
 };
 
 export {getObjects};
-
