@@ -1,4 +1,6 @@
-import {getObjects} from './data.js';
-getObjects();
-// console.log(getObjects());
-import './rendering.js';
+import './data.js';
+
+import {renderSimilarList} from './rendering.js';
+import './fullsize.js';
+
+renderSimilarList();
