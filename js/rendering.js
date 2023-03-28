@@ -1,23 +1,34 @@
 import {getObjects} from './data.js';
+import {ShowBigPicture} from './fullsize.js';
 
-const FullDisplay = document.querySelector('.overlay');
-FullDisplay.classList.remove('hidden');
-
-const similarListElement = FullDisplay.querySelector('.big-picture__img');
+const similarListElement = document.querySelector('.pictures');
 const similarPictureTemplate = document.querySelector('#picture')
   .content
   .querySelector('.picture');
 
 const similarPictures = getObjects();
 
-const similarListFragment = document.createDocumentFragment();
+const renderSimilarList = () => {
 
-similarPictures.forEach(({url, likes, comment}) => {
-  const pictureElement = similarPictureTemplate.cloneNode(true);
-  pictureElement.querySelector('.picture__img').src = url;
-  pictureElement.querySelector('.picture__likes').textContent = likes;
-  pictureElement.querySelector('.picture__comments').textContent = comment.length;
-  similarListFragment.append(pictureElement);
-});
+  const similarListFragment = document.createDocumentFragment();
 
-similarListElement.append(similarListFragment);
+  similarPictures.forEach((obj) => {
+    const pictureElement = similarPictureTemplate.cloneNode(true);
+    pictureElement.querySelector('.picture__img').src = obj.url;
+    pictureElement.querySelector('.picture__likes').textContent = obj.likes;
+    pictureElement.querySelector('.picture__comments').textContent = obj.comment.length;
+    pictureElement.addEventListener('click', () => {
+      ShowBigPicture(obj);
+
+    });
+    similarListFragment.append(pictureElement);
+  });
+
+  similarListElement.append(similarListFragment);
+};
+
+const clearSimilarList = () => {
+  similarListElement.innerHTML = '';
+};
+
+export {renderSimilarList, clearSimilarList};
