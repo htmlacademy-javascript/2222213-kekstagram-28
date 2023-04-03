@@ -1,5 +1,5 @@
 import {getObjects} from './data.js';
-import {ShowBigPicture} from './fullsize.js';
+import {showBigPicture} from './fullsize.js';
 
 const similarListElement = document.querySelector('.pictures');
 const similarPictureTemplate = document.querySelector('#picture')
@@ -17,8 +17,9 @@ const renderSimilarList = () => {
     pictureElement.querySelector('.picture__img').src = obj.url;
     pictureElement.querySelector('.picture__likes').textContent = obj.likes;
     pictureElement.querySelector('.picture__comments').textContent = obj.comment.length;
-    pictureElement.addEventListener('click', () => {
-      ShowBigPicture(obj);
+    pictureElement.addEventListener('click', (evt) => {
+      evt.stopPropagation();
+      showBigPicture(obj);
 
     });
     similarListFragment.append(pictureElement);

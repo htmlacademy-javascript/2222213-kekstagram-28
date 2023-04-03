@@ -1,4 +1,4 @@
-import {isEscapeKey, isEnterKey} from './util.js';
+import {isEscapeKey} from './util.js';
 import './rendering.js';
 import './count.js';
 
@@ -10,7 +10,6 @@ const onDocumentKeydown = (evt) => {
   }
 };
 
-const userPictureOpenElement = document.querySelector('.img-upload__label');
 const userPictureElement = document.querySelector('.big-picture');
 const commentCount = document.querySelector('.social__comment-count');
 const commentsLoader = document.querySelector('.comments-loader');
@@ -18,7 +17,7 @@ const body = document.querySelector('body');
 const userPictureCloseElement = document.querySelector('.big-picture__cancel');
 
 
-const ShowBigPicture = (obj) => {
+const showBigPicture = (obj) => {
   userPictureElement.classList.remove('hidden');
   body.classList.add('modal-open');
   commentsLoader.classList.add('hidden');
@@ -53,30 +52,14 @@ const ShowBigPicture = (obj) => {
 
 };
 
-function openUserModal () {
-  userPictureElement.classList.remove('hidden');
-
-  document.addEventListener('keydown', onDocumentKeydown);
-}
-
 function closeUserModal () {
   userPictureElement.classList.add('hidden');
 
   document.addEventListener('keydown', onDocumentKeydown);
 }
 
-userPictureOpenElement.addEventListener('click', () => {
-  openUserModal();
-});
-
-userPictureOpenElement.addEventListener('keydown', (evt) => {
-  if (isEnterKey(evt)) {
-    openUserModal();
-  }
-});
-
 userPictureCloseElement.addEventListener('click', () => {
   closeUserModal();
 });
 
-export {ShowBigPicture};
+export {showBigPicture};
