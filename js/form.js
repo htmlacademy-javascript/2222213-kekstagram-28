@@ -1,5 +1,7 @@
 import './fullsize.js';
 import {isEscapeKey} from './util.js';
+import {resetScale} from './scale.js';
+import {resetEffects} from './effect.js';
 
 const VALID_SYMBOLS = /^#[a-zа-яё0-9]{1,19}$/i;
 const MAX_HASHTAG = 5;
@@ -13,7 +15,15 @@ const uploadCancel = document.querySelector('#upload-cancel');
 const hashtagText = document.querySelector('.text__hashtags');
 const commentText = document.querySelector('.text__description');
 
+const pristine = new Pristine(form, {
+  classTo: 'img-upload__field-wrapper',
+  errorTextParent: 'img-upload__field-wrapper',
+  errorTextClass: 'img-upload__field-wrapper__error',
+});
+
 upload.addEventListener('change', () => {
+  resetScale();
+  resetEffects();
   uploadOverlay.classList.remove('hidden');
   body.classList.add('modal-open');
 
@@ -27,15 +37,13 @@ upload.addEventListener('change', () => {
 });
 
 uploadCancel.addEventListener('click', () => {
+  form.reset();
+  resetScale();
+  resetEffects();
+  pristine.reset();
   uploadOverlay.classList.add('hidden');
   body.classList.remove('modal-open');
   upload.value = '';
-});
-
-const pristine = new Pristine(form, {
-  classTo: 'img-upload__field-wrapper',
-  errorTextParent: 'img-upload__field-wrapper',
-  errorTextClass: 'img-upload__field-wrapper__error',
 });
 
 const isValidTag = (tag) => VALID_SYMBOLS.test(tag);
