@@ -32,7 +32,7 @@ const showBigPicture = (obj) => {
   const commentsListElement = userPictureElement.querySelector('.social__comments');
   commentsListElement.innerHTML = '';
 
-  obj.comment.forEach((element) => {
+  obj.comments.forEach((element) => {
     const liElement = document.createElement('li');
     liElement.classList.add('social__comment');
 
