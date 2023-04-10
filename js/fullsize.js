@@ -31,26 +31,67 @@ const showBigPicture = (obj) => {
 
   const commentsListElement = userPictureElement.querySelector('.social__comments');
   commentsListElement.innerHTML = '';
+  const showComments = (comments) => {
+    comments.forEach((element) => {
+      const liElement = document.createElement('li');
+      liElement.classList.add('social__comment');
 
-  obj.comments.forEach((element) => {
-    const liElement = document.createElement('li');
-    liElement.classList.add('social__comment');
+      const imgElement = document.createElement('img');
+      imgElement.classList.add('social__picture');
+      imgElement.src = element.avatar;
+      imgElement.alt = element.name;
 
-    const imgElement = document.createElement('img');
-    imgElement.classList.add('social__picture');
-    imgElement.src = element.avatar;
-    imgElement.alt = element.name;
+      const socialText = document.createElement('p');
+      socialText.classList.add('social__text');
+      socialText.textContent = element.message;
 
-    const socialText = document.createElement('p');
-    socialText.classList.add('social__text');
-    socialText.textContent = element.message;
+      liElement.append(imgElement, socialText);
 
-    liElement.append(imgElement, socialText);
+      commentsListElement.append(liElement);
+    });
+  };
 
-    commentsListElement.append(liElement);
+  const START = 0;
+  const STEP = 5;
+
+  let showedComments = [];
+  let currentlength = 5;
+
+  const getComments = (currentStart, length) => {
+    if (currentlength === obj.comments.length) {
+      commentsLoader.classList.add('hidden');
+    }
+    commentCount.textContent = `${currentlength} из ${obj.comments.length}`;
+    showedComments = [];
+    commentsListElement.innerHTML = '';
+
+    for (let index = currentStart; index < length; index++) {
+      const element = obj.comments[index];
+      showedComments.push(element);
+    }
+    if ((currentlength + STEP) <= obj.comments.length) {
+      currentlength = currentlength + STEP;
+    } else {
+      const diff = obj.comments.length - currentlength;
+      currentlength = currentlength + diff;
+    }
+  };
+
+  if (obj.comments.length <= currentlength) {
+    showComments(obj.comments);
+  } else if (obj.comments.length > currentlength) {
+    getComments(START, currentlength);
+    showComments(showedComments);
+    commentCount.classList.remove('hidden');
+    commentsLoader.classList.remove('hidden');
+  }
+
+  commentsLoader.addEventListener('click', () => {
+    getComments(START, currentlength);
+    showComments(showedComments);
   });
-
 };
+
 
 function closeUserModal () {
   userPictureElement.classList.add('hidden');
