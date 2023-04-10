@@ -4,7 +4,7 @@ import {getData} from './api.js';
 import {renderSimilarList} from './rendering.js';
 import './fullsize.js';
 import {showAlert, debounce} from './util.js';
-
+import './picture-user.js';
 
 try {
   const data = await getData();
