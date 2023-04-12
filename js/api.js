@@ -14,6 +14,10 @@ const ErrorText = {
   SEND_DATA: 'Не удалось отправить форму. Попробуйте ещё раз',
 };
 
+const bodyTag = document.querySelector('body');
+const errorElementTemplate = document.querySelector('#error').content.querySelector('.error');
+const errorElement = errorElementTemplate.cloneNode(true);
+
 const load = (route, errorText, method = Method.GET, body = null) =>
   fetch(`${BASE_URL}${route}`, { method, body })
     .then((response) => {
@@ -21,7 +25,6 @@ const load = (route, errorText, method = Method.GET, body = null) =>
         throw new Error();
       }
       if (method === Method.POST) {
-        const bodyTag = document.querySelector('body');
         const successElementTemplate = document.querySelector('#success')
           .content
           .querySelector('.success');
@@ -35,15 +38,16 @@ const load = (route, errorText, method = Method.GET, body = null) =>
       return response.json();
     })
     .catch(() => {
-      const bodyTag = document.querySelector('body');
-      const errorElementTemplate = document.querySelector('#error').content.querySelector('.error');
-      const errorElement = errorElementTemplate.cloneNode(true);
       bodyTag.append(errorElement);
       uploadModalClose();
       errorElement.addEventListener('click', () => {
         errorElement.remove();
       });
-      throw new Error(errorText);
+      bodyTag.append(errorElement);
+      uploadModalClose();
+      errorElement.addEventListener('click', () => {
+        errorElement.remove();
+      });
     });
 
 const getData = () => load(Route.GET_DATA, ErrorText.GET_DATA);
