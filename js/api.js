@@ -1,4 +1,5 @@
-import uploadModalClose from './form.js';
+import {uploadModalClose} from './form.js';
+import {unblockSubmitButton} from './form.js';
 
 const BASE_URL = 'https://28.javascript.pages.academy/kekstagram';
 const Route = {
@@ -39,15 +40,11 @@ const load = (route, errorText, method = Method.GET, body = null) =>
     })
     .catch(() => {
       bodyTag.append(errorElement);
-      uploadModalClose();
       errorElement.addEventListener('click', () => {
+        unblockSubmitButton();
         errorElement.remove();
       });
-      bodyTag.append(errorElement);
-      uploadModalClose();
-      errorElement.addEventListener('click', () => {
-        errorElement.remove();
-      });
+      throw new Error(errorText);
     });
 
 const getData = () => load(Route.GET_DATA, ErrorText.GET_DATA);

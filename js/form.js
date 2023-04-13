@@ -114,4 +114,4 @@ hashtagText.addEventListener('keydown', (evt) => {
   }
 });
 
-export default uploadModalClose;
+export {uploadModalClose, unblockSubmitButton};
